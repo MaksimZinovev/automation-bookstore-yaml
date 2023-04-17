@@ -7,8 +7,8 @@ Site is deployed at https://automationbookstore.dev (https://mzinbookstore-linux
 
 ## Installation 
 
-```
-git clone https://github.com/MaksimZinovev/automation-bookstore.git
+```bash
+git clone https://github.com/MaksimZinovev/automation-bookstore-yaml.git
 ```
 
 ## Usage 
@@ -16,14 +16,14 @@ git clone https://github.com/MaksimZinovev/automation-bookstore.git
 To run tests locally
 Install [live-server - npm](https://www.npmjs.com/package/live-server)
 
-```shell
+```bash
 npm install live-server -g  
 ```
 
 2. Chek in your browser http://127.0.0.1:8080/. Website should be accessible 
 3. Install Cypress
 
-```shell
+```bash
 cd e2e-tests
 npm init -y
 npm install cypress
@@ -35,15 +35,21 @@ Run `search.cy.js` in Cypress app to check if it is working.
 
 3. Run the website 
 
-```shell
-cd automation-bookstore
+```bash
+cd automation-bookstore-yaml
 live-server
 ```
 
 4. Run cypress tests from CLI
 
-```shell
+```bash
 npm test
+```
+
+5. Run cypress specs in UI mode
+
+```shell
+npx cypress open
 ```
 
 
