@@ -5,34 +5,37 @@
 # test
 
 trigger:
-- master
+  - master
 
 stages:
- - stage: Build
-   jobs:
-    - job: BuildWebApp
-      pool:
-        vmImage: ubuntu-latest
-      steps:
-      - task: ArchiveFiles@2
-        inputs:
-          rootFolderOrFile: '$(build.sourcesDirectory)'
-          includeRootFolder: false
-      - task: PublishBuildArtifacts@1
+  - stage: Build
+    jobs:
+      - job: BuildWebApp
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - task: ArchiveFiles@2
+            inputs:
+              rootFolderOrFile: "$(build.sourcesDirectory)"
+              includeRootFolder: false
+          - task: PublishBuildArtifacts@1
 
- - stage: Dev
-   jobs: 
-    - job: Deploy
-      pool:
-        vmImage: ubuntu-latest
-      steps:
-        - task: DownloadBuildArtifacts@0
-          inputs: 
-            buildType: 'current'
-            downloadType: 'single'
-            artifactName: 'drop'
-            downloadPath: '$(System.DefaultWorkingDirectory)'
-        - task: AzureRmWebAppDeployment@4
-          inputs: 
-            ConnectionType: 'AzureRM'
-            azureSubscription: 'Azure subscription 1 (324b5154-997f-4805-8ce2-66911f1ae942)'
+  - stage: Dev
+    jobs:
+      - job: Deploy
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - task: DownloadBuildArtifacts@0
+            inputs:
+              buildType: "current"
+              downloadType: "single"
+              artifactName: "drop"
+              downloadPath: "$(System.DefaultWorkingDirectory)"
+          - task: AzureRmWebAppDeployment@4
+            inputs:
+              ConnectionType: "AzureRM"
+              azureSubscription: "Azure subscription 1 (324b5154-997f-4805-8ce2-66911f1ae942)"
+              appType: 'webApp'
+              WebAppName: 'abookstore'
+              packageForLinux:  "$(System.DefaultWorkingDirectory)/**/*.zip"
