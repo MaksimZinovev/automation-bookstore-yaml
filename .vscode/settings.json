@@ -1,0 +1,6 @@
+
+{
+    "[azure-pipelines]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
+}
