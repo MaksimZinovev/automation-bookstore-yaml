@@ -37,5 +37,5 @@ stages:
               ConnectionType: "AzureRM"
               azureSubscription: "Azure subscription 1 (324b5154-997f-4805-8ce2-66911f1ae942)"
               appType: 'webApp'
-              WebAppName: 'abookstore'
+              WebAppName: 'mzinbookstore-linux'
               packageForLinux:  "$(System.DefaultWorkingDirectory)/**/*.zip"
