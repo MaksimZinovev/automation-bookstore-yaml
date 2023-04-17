@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="10.514" tests="1" failures="0">
+  <testsuite name="Root Suite" timestamp="2023-02-04T10:39:12" tests="0" file="cypress\e2e\search.cy.js" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="search for books" timestamp="2023-02-04T10:39:12" tests="1" time="10.471" failures="0">
+    <testcase name="search for books should return one book with title Agile Testing" time="10.392" classname="should return one book with title Agile Testing">
+    </testcase>
+  </testsuite>
+</testsuites>

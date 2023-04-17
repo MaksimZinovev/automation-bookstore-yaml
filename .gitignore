@@ -1,3 +1,12 @@
+e2e/node_modules/
+e2e/cypress/screenshots
+e2e/cypress/videos
+e2e-tests/node_modules/
+e2e-tests/cypress/screenshots
+e2e-tests/cypress/videos
+e2e-tests/cypress/results
+
+
 # Logs
 logs
 *.log
