@@ -1,9 +1,3 @@
-# HTML
-# Archive your static HTML project and save it with the build record.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-# test
-
 trigger:
   - master
 
@@ -39,3 +33,15 @@ stages:
               appType: 'webApp'
               WebAppName: 'mzinbookstore-linux'
               packageForLinux:  "$(System.DefaultWorkingDirectory)/**/*.zip"
+
+      - job: Test
+        dependsOn: Deploy
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - template: steps_test.yaml
+            parameters:
+              url: "https://mzinbookstore-linux.azurewebsites.net/"
+
+            
+
