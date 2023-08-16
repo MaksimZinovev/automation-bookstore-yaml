@@ -27,7 +27,7 @@
             filepath: "$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress.config.js"
             filecontent: |
               {
-                "baseURL":"${{ parameters.url }}",
+                "baseUrl": "${{ parameters.url }}",
                 "reporter": "junit",
                 reporterOptions: {
                   mochaFile: 'results/TEST-[hash].xml',

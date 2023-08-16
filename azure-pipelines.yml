@@ -41,4 +41,4 @@ stages:
         steps:
           - template: steps_test.yml
             parameters:
-              url: "https://mzinbookstore-linux.azurewebsites.net/"
+              url: "https://mzinbookstore-linux.azurewebsites.net"
