@@ -39,6 +39,6 @@ stages:
         pool:
           vmImage: ubuntu-latest
         steps:
-          - template: steps_test.yaml
+          - template: steps_test.yml
             parameters:
               url: "https://mzinbookstore-linux.azurewebsites.net/"
