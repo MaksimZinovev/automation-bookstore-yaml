@@ -26,14 +26,14 @@
           inputs:
             filepath: "$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress.config.js"
             filecontent: |
-              {
-                "baseUrl": "${{ parameters.url }}",
-                "reporter": "junit",
-                reporterOptions: {
-                  mochaFile: 'results/TEST-[hash].xml',
-                  toConsole: true,
-                }
+            {
+              "baseUrl": "${{ parameters.url }}",
+              "reporter": "junit",
+              "reporterOptions": {
+                "mochaFile": "results/TEST-[hash].xml",
+                "toConsole": true
               }
+            }
             fileoverwrite: true
         - script: "npm run test -- --browser chrome --headless"
           workingDirectory: "$(System.DefaultWorkingDirectory)/abs/e2e-tests"
