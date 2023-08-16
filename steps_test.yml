@@ -36,7 +36,7 @@
               }
             fileoverwrite: true
         - script: "npm run test -- --browser chrome --headless"
-          workingworkingDirectory: "$(System.DefaultWorkingDirectory)/abs/e2e-tests"
+          workingDirectory: "$(System.DefaultWorkingDirectory)/abs/e2e-tests"
           displayName: "Run Tests"
         - task: PublishTestResults@2
           displayName: "Publish Test Results"
