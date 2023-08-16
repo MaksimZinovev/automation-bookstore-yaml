@@ -24,7 +24,7 @@
         - task: file-creator@6
           displayName: "Update Configurations"
           inputs:
-            filepath: "$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress.json"
+            filepath: "$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress.config.js"
             filecontent: |
               {
                 "baseURL":"${{ parameters.url }}",
