@@ -26,14 +26,22 @@
           inputs:
             filepath: "$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress.config.js"
             filecontent: |
-              {
-                "baseUrl": "${{ parameters.url }}",
-                "reporter": "junit",
-                "reporterOptions": {
-                  "mochaFile": "results/TEST-[hash].xml",
-                  "toConsole": true
-                }
-              },
+              const { defineConfig } = require("cypress");
+              // baseUrl: 'http://127.0.0.1:8080',
+              // Updated configuration CI/CD
+              module.exports = defineConfig({
+                reporter: 'junit',
+                reporterOptions: {
+                  mochaFile: 'results/TEST-[hash].xml',
+                  toConsole: true,
+                },
+                e2e: {
+                  baseUrl: 'https://mzinbookstore-linux.azurewebsites.net/',
+                  pageLoadTimeout: 120000,
+                  setupNodeEvents(on, config) {
+                  },
+                },
+              });
             fileoverwrite: true
         - script: "npm run test -- --browser chrome --headless"
           workingDirectory: "$(System.DefaultWorkingDirectory)/abs/e2e-tests"
