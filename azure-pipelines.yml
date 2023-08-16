@@ -36,6 +36,7 @@ stages:
 
       - job: Test
         dependsOn: Deploy
+        strategy:
         pool:
           vmImage: ubuntu-latest
         steps:

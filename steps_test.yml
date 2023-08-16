@@ -1,0 +1,54 @@
+        parameters:
+        - name: url
+        steps:
+        - task: DownloadBuildArtifacts@0
+          inputs:
+            buildType: "current"
+            downloadType: "single"
+            artifactName: "drop"
+            downloadPath: "$(System.DefaultWorkingDirectory)"
+        - task: ExtractFiles@1
+          displayName: 'Extract files '
+          inputs:
+            destinationFolder: "$(System.DefaultWorkingDirectory)/abs"
+        - task: NodeTool@0
+          displayName: "Use Node 12.x"
+          inputs:
+              versionSpec: 12.x
+        - task: Npm@1
+          displayName: "Install Dependencies"
+          inputs:
+            command: ci
+            workingDir: "$(System.DefaultWorkingDirectory)/abs/e2e-tests"
+            verbose: false
+        - task: file-creator@6
+          displayName: "Update Configurations"
+          inputs:
+            filepath: "$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress.json"
+            filecontent: |
+              {
+                "baseURL":"${{ parameters.url }}",
+                "reporter": "junit",
+                reporterOptions: {
+                  mochaFile: 'results/TEST-[hash].xml',
+                  toConsole: true,
+                }
+              }
+            fileoverwrite: true
+        - script: "npm run test -- --browser chrome --headless"
+          workingworkingDirectory: "$(System.DefaultWorkingDirectory)/abs/e2e-tests"
+          displayName: "Run Tests"
+        - task: PublishTestResults@2
+          displayName: "Publish Test Results"
+          inputs:
+            searchFolder: "$(System.DefaultWorkingDirectory)/abs/e2e-tests/results"
+            failTaskOnFailedTests: true
+            testRunTitle: "End-To-End Tests - Chrome"
+          condition: succeededOrFailed()
+        - task: PowerShell@2
+          displayName: "Download Artifacts"
+          inputs:
+            targetType: "inline"
+            script: |
+              # Videos
+              Compress-Archive -Path "$(System.DefaultWorkingDir
