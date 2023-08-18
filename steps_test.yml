@@ -52,7 +52,6 @@
             searchFolder: "$(System.DefaultWorkingDirectory)/abs/e2e-tests/results"
             failTaskOnFailedTests: false
             testRunTitle: "End-To-End Tests - Chrome"
-          condition: and(succeededOrFailed(), eq(variables['System.JobPositionInPhase'], '1'))
           condition: succeededOrFailed()
         - task: PowerShell@2
           displayName: "Download Artifacts"
