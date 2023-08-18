@@ -50,9 +50,8 @@
           displayName: "Publish Test Results"
           inputs:
             searchFolder: "$(System.DefaultWorkingDirectory)/abs/e2e-tests/results"
-            failTaskOnFailedTests: false
+            failTaskOnFailedTests: true
             testRunTitle: "End-To-End Tests - Chrome"
-          condition: and(succeededOrFailed(), eq(variables['System.JobPositionInPhase'], '1'))
           condition: succeededOrFailed()
         - task: PowerShell@2
           displayName: "Download Artifacts"
@@ -60,7 +59,4 @@
             targetType: "inline"
             script: |
               # Videos
-              Compress-Archive -Path "$(System.DefaultWorkingDirectory/abs/e2e-tests/cypress/videos)"
-
-              Write-Host "##vso[task.uploadfile]$(System.DefaultWorkingDirectory/abs/e2e-tests/cypress/videos)"
-            condition: succeededOrFailed()
+              Compress-Archive -Path "$(System.DefaultWorkingDir

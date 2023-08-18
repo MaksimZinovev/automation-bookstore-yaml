@@ -13,4 +13,6 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
     },
   },
-});
+}); 
+// Change timeout to 1000
+
