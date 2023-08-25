@@ -59,7 +59,7 @@
             targetType: "inline"
             script: |
               # Videos
-              Compress-Archive -Path "$(System.DefaultWorkingDirectory/abs/e2e-tests/cypress/videos)"
+              Compress-Archive -Path "$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress/videos" -DestinationPath "$(System.DefaultWorkingDirectory)/abs/e2e/cypress/videos" -Force
 
-              Write-Host "##vso[task.uploadfile]$(System.DefaultWorkingDirectory/abs/e2e-tests/cypress/videos)"
-            condition: succeededOrFailed()
+              Write-Host "##vso[task.uploadfile]$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress/videos" 
+          condition: succeededOrFailed()
