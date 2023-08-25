@@ -1,65 +1,65 @@
-        parameters:
-        - name: url
-        steps:
-        - task: DownloadBuildArtifacts@0
-          inputs:
-            buildType: "current"
-            downloadType: "single"
-            artifactName: "drop"
-            downloadPath: "$(System.DefaultWorkingDirectory)"
-        - task: ExtractFiles@1
-          displayName: 'Extract files '
-          inputs:
-            destinationFolder: "$(System.DefaultWorkingDirectory)/abs"
-        - task: NodeTool@0
-          displayName: "Use Node 12.x"
-          inputs:
-              versionSpec: 12.x
-        - task: Npm@1
-          displayName: "Install Dependencies"
-          inputs:
-            command: ci
-            workingDir: "$(System.DefaultWorkingDirectory)/abs/e2e-tests"
-            verbose: false
-        - task: file-creator@6
-          displayName: "Update Configurations"
-          inputs:
-            filepath: "$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress.config.js"
-            filecontent: |
-              const { defineConfig } = require("cypress");
-              // baseUrl: 'http://127.0.0.1:8080',
-              // Updated configuration CI/CD
-              module.exports = defineConfig({
-                reporter: 'junit',
-                reporterOptions: {
-                  mochaFile: 'results/TEST-[hash].xml',
-                  toConsole: true,
-                },
-                e2e: {
-                  baseUrl: 'https://mzinbookstore-linux.azurewebsites.net/',
-                  pageLoadTimeout: 120000,
-                  setupNodeEvents(on, config) {
-                  },
-                },
-              });
-            fileoverwrite: true
-        - script: "npm run test -- --browser chrome --headless"
-          workingDirectory: "$(System.DefaultWorkingDirectory)/abs/e2e-tests"
-          displayName: "Run Tests"
-        - task: PublishTestResults@2
-          displayName: "Publish Test Results"
-          inputs:
-            searchFolder: "$(System.DefaultWorkingDirectory)/abs/e2e-tests/results"
-            failTaskOnFailedTests: false
-            testRunTitle: "End-To-End Tests - Chrome"
-          condition: succeededOrFailed()
-        - task: PowerShell@2
-          displayName: "Download Artifacts"
-          inputs:
-            targetType: "inline"
-            script: |
-              # Videos
-              Compress-Archive -Path "$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress/videos" -DestinationPath "$(System.DefaultWorkingDirectory)/abs/e2e/cypress/videos" -Force
-
-              Write-Host "##vso[task.uploadfile]$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress/videos" 
-          condition: succeededOrFailed()
+parameters:
+- name: url
+steps:
+- task: DownloadBuildArtifacts@0
+  inputs:
+    buildType: "current"
+    downloadType: "single"
+    artifactName: "drop"
+    downloadPath: "$(System.DefaultWorkingDirectory)"
+- task: ExtractFiles@1
+  displayName: 'Extract files '
+  inputs:
+    destinationFolder: "$(System.DefaultWorkingDirectory)/abs"
+- task: NodeTool@0
+  displayName: "Use Node 12.x"
+  inputs:
+    versionSpec: 12.x
+- task: Npm@1
+  displayName: "Install Dependencies"
+  inputs:
+    command: ci
+    workingDir: "$(System.DefaultWorkingDirectory)/abs/e2e-tests"
+    verbose: false
+- task: file-creator@6
+  displayName: "Update Configurations"
+  inputs:
+    filepath: "$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress.config.js"
+    filecontent: |
+      const { defineConfig } = require("cypress");
+      // baseUrl: 'http://127.0.0.1:8080',
+      // Updated configuration CI/CD
+      module.exports = defineConfig({
+        reporter: 'junit',
+        reporterOptions: {
+          mochaFile: 'results/TEST-[hash].xml',
+          toConsole: true,
+        },
+        e2e: {
+          baseUrl: 'https://mzinbookstore-linux.azurewebsites.net/',
+          pageLoadTimeout: 120000,
+          setupNodeEvents(on, config) {
+          },
+        },
+      });
+    fileoverwrite: true
+- script: "npm run test -- --browser chrome --headless"
+  workingDirectory: "$(System.DefaultWorkingDirectory)/abs/e2e-tests"
+  displayName: "Run Tests"
+- task: PublishTestResults@2
+  displayName: "Publish Test Results"
+  inputs:
+    searchFolder: "$(System.DefaultWorkingDirectory)/abs/e2e-tests/results"
+    failTaskOnFailedTests: false
+    testRunTitle: "End-To-End Tests - Chrome"
+  condition: succeededOrFailed()
+- task: PowerShell@2
+  displayName: "Download Artifacts"
+  inputs:
+    targetType: "inline"
+    script: |
+      # Videos
+      Compress-Archive -Path "$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress/videos" -DestinationPath "$(System.DefaultWorkingDirectory)/abs/e2e/cypress/videos" -Force
+      
+      Write-Host "##vso[task.uploadfile]$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress/videos.zip"
+  condition: succeededOrFailed()
