@@ -3,6 +3,7 @@ const { defineConfig } = require("cypress");
 // Updated configuration CI/CD
 module.exports = defineConfig({
   reporter: 'junit',
+  video: true,
   reporterOptions: {
     mochaFile: 'results/TEST-[hash].xml',
     toConsole: true,
