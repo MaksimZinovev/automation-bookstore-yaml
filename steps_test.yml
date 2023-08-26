@@ -60,7 +60,7 @@ steps:
     targetType: "inline"
     script: |
       # Videos
-      Compress-Archive -Path "$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress/videos" -DestinationPath "$(System.DefaultWorkingDirectory)/abs/e2e/cypress/videos" -Force
+      Compress-Archive -Path "$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress/videos" -DestinationPath "$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress/videos" -Force
       
       Write-Host "##vso[task.uploadfile]$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress/videos.zip"
   condition: succeededOrFailed()
