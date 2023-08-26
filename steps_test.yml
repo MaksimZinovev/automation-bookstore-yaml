@@ -43,7 +43,7 @@ steps:
     targetType: "inline"
     script: |
       # Compress videos 
-      Compress-Archive -Path "$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress/videos" -DestinationPath "$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress/videos" -Force -Debug
+      zip -rv "$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress/videos.zip" "$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress/videos"
       
       # Upload artifact
       Write-Host "##vso[artifact.upload containerfolder=videos;artifactname=myvideos]$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress/videos.zip" -Debug
