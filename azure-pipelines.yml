@@ -14,7 +14,7 @@ stages:
               includeRootFolder: false
           - task: PublishBuildArtifacts@1
             displayName: "Publish Build Artifacts"
-            condition: succeededOrFailed();
+            condition: succeededOrFailed()
 
   - stage: Dev
     jobs:
