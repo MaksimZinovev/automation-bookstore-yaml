@@ -1,5 +1,8 @@
 parameters:
 - name: url
+  default: "https://mzinbookstore-linux.azurewebsites.net"
+- name: browser
+  default: chrome
 steps:
 - task: DownloadBuildArtifacts@0
   inputs:
@@ -21,32 +24,11 @@ steps:
     command: ci
     workingDir: "$(System.DefaultWorkingDirectory)/abs/e2e-tests"
     verbose: false
-- task: file-creator@6
-  displayName: "Update Configurations"
-  inputs:
-    filepath: "$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress.config.js"
-    filecontent: |
-      const { defineConfig } = require("cypress");
-      // baseUrl: 'http://127.0.0.1:8080',
-      // Updated configuration CI/CD
-      module.exports = defineConfig({
-        reporter: 'junit',
-        video: true,
-        reporterOptions: {
-          mochaFile: 'results/TEST-[hash].xml',
-          toConsole: true,
-        },
-        e2e: {
-          baseUrl: 'https://mzinbookstore-linux.azurewebsites.net/',
-          pageLoadTimeout: 120000,
-          setupNodeEvents(on, config) {
-          },
-        },
-      });
-    fileoverwrite: true
-- script: "npm run test -- --browser chrome --headless"
+- script: "npm run test --browser ${{ parameters.browser }} --headless"
   workingDirectory: "$(System.DefaultWorkingDirectory)/abs/e2e-tests"
   displayName: "Run Tests"
+  env:
+    BASE_URL: ${{ parameters.url }}
 - task: PublishTestResults@2
   displayName: "Publish Test Results"
   inputs:

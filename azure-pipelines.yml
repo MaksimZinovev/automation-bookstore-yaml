@@ -13,6 +13,8 @@ stages:
               rootFolderOrFile: "$(build.sourcesDirectory)"
               includeRootFolder: false
           - task: PublishBuildArtifacts@1
+            displayName: "Publish Build Artifacts"
+            condition: succeededOrFailed();
 
   - stage: Dev
     jobs:
@@ -42,3 +44,4 @@ stages:
           - template: steps_test.yml
             parameters:
               url: "https://mzinbookstore-linux.azurewebsites.net"
+              browser: "chrome"

@@ -1,6 +1,4 @@
 const { defineConfig } = require("cypress");
-// baseUrl: 'http://127.0.0.1:8080',
-// Updated configuration CI/CD
 module.exports = defineConfig({
   reporter: 'junit',
   video: true,
@@ -9,7 +7,7 @@ module.exports = defineConfig({
     toConsole: true,
   },
   e2e: {
-    baseUrl: 'https://mzinbookstore-linux.azurewebsites.net/',
+    baseUrl: process.env.BASE_URL || 'http://127.0.0.1:8080/',
     pageLoadTimeout: 120000,
     setupNodeEvents(on, config) {
     },
