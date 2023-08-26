@@ -5,13 +5,14 @@ parameters:
   default: chrome
 steps:
 - task: DownloadBuildArtifacts@0
+  displayName: "Download Build Artifacts"
   inputs:
     buildType: "current"
     downloadType: "single"
     artifactName: "drop"
     downloadPath: "$(System.DefaultWorkingDirectory)"
 - task: ExtractFiles@1
-  displayName: 'Extract files '
+  displayName: "Extract Files"
   inputs:
     destinationFolder: "$(System.DefaultWorkingDirectory)/abs"
 - task: NodeTool@0
@@ -34,7 +35,7 @@ steps:
   inputs:
     searchFolder: "$(System.DefaultWorkingDirectory)/abs/e2e-tests/results"
     failTaskOnFailedTests: false
-    testRunTitle: "End-To-End Tests - Chrome"
+    testRunTitle: "End-To-End Tests - ${{ parameters.browser }}"
   condition: succeededOrFailed()
 - task: PowerShell@2
   displayName: "Download Artifacts"
@@ -42,7 +43,8 @@ steps:
     targetType: "inline"
     script: |
       # Videos
-      Compress-Archive -Path "$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress/videos" -DestinationPath "$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress/videos" -Force
+      Compress-Archive -Path "$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress/videos" -DestinationPath "$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress/videos" -Force -Debug
       
-      Write-Host "##vso[task.uploadfile]$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress/videos.zip"
+      Write-Host "##vso[artifact.upload
+      artifactname=uploadedresult;]$(System.DefaultWorkingDirectory)/abs/e2e-tests/cypress/videos.zip" -Debug
   condition: succeededOrFailed()
