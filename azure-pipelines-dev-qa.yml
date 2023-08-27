@@ -1,6 +1,14 @@
 trigger:
 - multiple-env
 
+parameters:
+- name: manualTriggerDEV
+  type: boolean
+  default: true
+- name: manualTriggerQA
+  type: boolean
+  default: false
+
 variables:
   # Azure Resource Manager connection created during pipeline creation
   azureSubscription: 'absServiceConnection'
@@ -47,6 +55,7 @@ stages:
   displayName: 'Dev stage'
   condition: eq(variables.manualTriggerDEV, true)
   dependsOn: Build
+  condition: succeeded('Build')
   jobs:
   - template: deploy_and_test.yml
     parameters:
@@ -61,6 +70,7 @@ stages:
   displayName: 'QA stage'
   condition: eq(variables.manualTriggerQA, true)
   dependsOn: Build
+  condition: succeeded('Build')
   jobs:
   - template: deploy_and_test.yml
     parameters:
