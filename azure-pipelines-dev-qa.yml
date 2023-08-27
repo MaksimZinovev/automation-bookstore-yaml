@@ -22,23 +22,23 @@ stages:
   displayName: Build Web App Stage
   jobs:
   - job: Build
-      pool:
-        vmImage: $(vmImageName)
-      steps:
-      - script: echo Hello, world!
-        displayName: 'Run a one-line script'
-      - task: ArchiveFiles@2
-        inputs:
-          rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
-          includeRootFolder: false
-          archiveType: 'zip'
-          archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-          replaceExistingArchive: true
-      - task: PublishBuildArtifacts@1
-        inputs:
-          pathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-          artifactName: 'drop'
-          publishLocation: 'Container'
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - script: echo Hello, world!
+      displayName: 'Run a one-line script'
+    - task: ArchiveFiles@2
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+        replaceExistingArchive: true
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+        artifactName: 'drop'
+        publishLocation: 'Container'
 
 - stage: Dev
   displayName: 'Dev stage'
