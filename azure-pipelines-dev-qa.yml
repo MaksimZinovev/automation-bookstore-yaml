@@ -45,7 +45,7 @@ stages:
 
 - stage: Dev
   displayName: 'Dev stage'
-  condition: eq(variables.manualTrigger, true)
+  condition: eq(variables.manualTriggerDEV, true)
   dependsOn: Build
   jobs:
   - template: deploy_and_test.yml
@@ -59,7 +59,7 @@ stages:
 
 - stage: QA
   displayName: 'QA stage'
-  condition: eq(variables.manualTrigger, true)
+  condition: eq(variables.manualTriggerQA, true)
   dependsOn: Build
   jobs:
   - template: deploy_and_test.yml
