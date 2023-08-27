@@ -5,7 +5,7 @@ parameters:
 - name: manualTriggerQA
   type: boolean
   default: false
-  
+
 trigger:
 - multiple-env
 
@@ -19,7 +19,7 @@ variables:
 
   # Environment name
   environmentName: 'mzinbookstore-linux'
-
+ 
   # Package or folder path
   packageFolderPath: '$(System.DefaultWorkingDirectory)/'
 
