@@ -37,18 +37,13 @@ jobs:
             WebAppName: ${{ parameters.webAppName }}
             packageForLinux: '$(System.ArtifactsDirectory)/**/*.zip'
 - job: Test
+  dependsOn: Deploy
   displayName: 'Test'
   pool:
     vmImage: 'ubuntu-latest'
   steps:
   - script: echo "Running tests"
-        - job: Test
-        dependsOn: Deploy
-        pool:
-          vmImage: ubuntu-latest
-        steps:
-          - template: steps_test.yml
-            parameters:
-              url: ${{ parameters.url }}
-              browser: ${{ parameters.browser }}
-
+  - template: steps_test.yml
+    parameters:
+      url: ${{ parameters.url }}
+      browser: ${{ parameters.browser }}
