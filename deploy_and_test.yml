@@ -1,0 +1,54 @@
+parameters:
+- name: environmentName
+  type: string
+- name: webAppName
+  type: string
+- name: azureSubscription
+  type: string
+- name: packageFolderPath
+  type: string
+- name: url
+  type: string
+- name: browser
+  type: string
+
+jobs:
+- deployment: Deploy
+  displayName: 'Deploy'
+  environment: ${{ parameters.environmentName }}
+  pool:
+    vmImage: 'ubuntu-latest'
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - checkout: self
+        - task: DownloadBuildArtifacts@0
+          inputs:
+            buildType: 'current'
+            downloadType: 'single'
+            artifactName: 'drop'
+            downloadPath: '$(System.ArtifactsDirectory)'
+        - task: AzureRmWebAppDeployment@4
+          inputs:
+            ConnectionType: 'AzureRM'
+            azureSubscription: ${{ parameters.azureSubscription }}
+            appType: 'webAppLinux'
+            WebAppName: ${{ parameters.webAppName }}
+            packageForLinux: '$(System.ArtifactsDirectory)/**/*.zip'
+- job: Test
+  displayName: 'Test'
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - script: echo "Running tests"
+        - job: Test
+        dependsOn: Deploy
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - template: steps_test.yml
+            parameters:
+              url: ${{ parameters.url }}
+              browser: ${{ parameters.browser }}
+

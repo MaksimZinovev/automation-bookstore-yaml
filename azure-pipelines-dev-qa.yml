@@ -1,0 +1,52 @@
+trigger:
+- main
+
+variables:
+  # Azure Resource Manager connection created during pipeline creation
+  azureSubscription: 'absServiceConnection'
+
+  # Web app name
+  webAppName: 'mzinbookstore-linux'
+
+  # Environment name
+  environmentName: 'mzinbookstore-linux'
+
+  # Package or folder path
+  packageFolderPath: '$(System.DefaultWorkingDirectory)/'
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+
+stages:
+- stage: Build
+  displayName: Build Web App Stage
+      pool:
+        vmImage: $(vmImageName)
+      steps:
+      - script: echo Hello, world!
+        displayName: 'Run a one-line script'
+      - task: ArchiveFiles@2
+        inputs:
+          rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+          includeRootFolder: false
+          archiveType: 'zip'
+          archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+          replaceExistingArchive: true
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+          artifactName: 'drop'
+          publishLocation: 'Container'
+
+- stage: Dev
+  displayName: 'Dev stage'
+  dependsOn: Build
+  jobs:
+  - template: deploy_and_test.yml
+    parameters:
+      environmentName: $(environmentName)
+      webAppName: $(webAppName)
+      azureSubscription: $(azureSubscription)
+      packageFolderPath: $(packageFolderPath)
+      url: "https://mzinbookstore-linux.azurewebsites.net"
+      browser: "chrome"
