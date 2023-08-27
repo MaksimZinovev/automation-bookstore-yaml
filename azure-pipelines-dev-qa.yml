@@ -17,6 +17,9 @@ variables:
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
+  manualTriggerDEV: true
+  manualTriggerQA: false
+
 stages:
 - stage: Build
   displayName: Build Web App Stage
@@ -42,6 +45,7 @@ stages:
 
 - stage: Dev
   displayName: 'Dev stage'
+  condition: eq(variables.manualTrigger, true)
   dependsOn: Build
   jobs:
   - template: deploy_and_test.yml
@@ -55,7 +59,7 @@ stages:
 
 - stage: QA
   displayName: 'QA stage'
-  condition: manual()
+  condition: eq(variables.manualTrigger, true)
   dependsOn: Build
   jobs:
   - template: deploy_and_test.yml
