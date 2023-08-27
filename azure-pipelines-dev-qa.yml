@@ -52,3 +52,17 @@ stages:
       packageFolderPath: $(packageFolderPath)
       url: "https://mzinbookstore-linux.azurewebsites.net"
       browser: "chrome"
+
+- stage: QA
+  displayName: 'QA stage'
+  condition: manual()
+  dependsOn: Build
+  jobs:
+  - template: deploy_and_test.yml
+    parameters:
+      environmentName: "mzinbookstore-linux"
+      webAppName: $(webAppName)
+      azureSubscription: $(azureSubscription)
+      packageFolderPath: $(packageFolderPath)
+      url: "https://mzinbookstore-linux.azurewebsites.net"
+      browser: "chrome"
