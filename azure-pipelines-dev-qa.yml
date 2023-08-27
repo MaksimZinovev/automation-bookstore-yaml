@@ -20,6 +20,8 @@ variables:
 stages:
 - stage: Build
   displayName: Build Web App Stage
+  jobs:
+  - job: Build
       pool:
         vmImage: $(vmImageName)
       steps:
