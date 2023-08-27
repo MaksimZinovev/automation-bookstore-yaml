@@ -1,6 +1,3 @@
-trigger:
-- multiple-env
-
 parameters:
 - name: manualTriggerDEV
   type: boolean
@@ -8,6 +5,10 @@ parameters:
 - name: manualTriggerQA
   type: boolean
   default: false
+  
+trigger:
+- multiple-env
+
 
 variables:
   # Azure Resource Manager connection created during pipeline creation
@@ -24,6 +25,9 @@ variables:
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
+
+  manualTriggerDEV: ${{ parameters.manualTriggerDEV }}
+  manualTriggerQA: ${{ parameters.manualTriggerQA }}
 
 stages:
 - stage: Build
@@ -50,7 +54,7 @@ stages:
 
 - stage: Dev
   displayName: 'Dev stage'
-  condition: and(eq(parameters.manualTriggerDEV, true), succeeded('Build'))
+  condition: and(eq(variables.manualTriggerDEV, true), succeeded('Build'))
   dependsOn: Build
   jobs:
   - template: deploy_and_test.yml
@@ -64,7 +68,7 @@ stages:
 
 - stage: QA
   displayName: 'QA stage'
-  condition: and(eq(parameters.manualTriggerQA, true), succeeded('Build'))
+  condition: and(eq(variables.manualTriggerQA, true), succeeded('Build'))
   dependsOn: Build
   jobs:
   - template: deploy_and_test.yml
