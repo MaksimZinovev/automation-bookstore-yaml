@@ -53,7 +53,7 @@ stages:
 
 - stage: Dev
   displayName: 'Dev stage'
-  condition: eq(variables.manualTriggerDEV, true)
+  condition: eq(parameters.manualTriggerDEV, true)
   dependsOn: Build
   condition: succeeded('Build')
   jobs:
@@ -68,7 +68,7 @@ stages:
 
 - stage: QA
   displayName: 'QA stage'
-  condition: eq(variables.manualTriggerQA, true)
+  condition: eq(parameters.manualTriggerQA, true)
   dependsOn: Build
   condition: succeeded('Build')
   jobs:
