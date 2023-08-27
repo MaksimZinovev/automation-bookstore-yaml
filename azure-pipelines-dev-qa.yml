@@ -53,9 +53,8 @@ stages:
 
 - stage: Dev
   displayName: 'Dev stage'
-  condition: eq(parameters.manualTriggerDEV, true)
+  condition: and(eq(parameters.manualTriggerDEV, true), succeeded('Build'))
   dependsOn: Build
-  condition: succeeded('Build')
   jobs:
   - template: deploy_and_test.yml
     parameters:
@@ -68,9 +67,8 @@ stages:
 
 - stage: QA
   displayName: 'QA stage'
-  condition: eq(parameters.manualTriggerQA, true)
+  condition: and(eq(parameters.manualTriggerQA, true), succeeded('Build'))
   dependsOn: Build
-  condition: succeeded('Build')
   jobs:
   - template: deploy_and_test.yml
     parameters:
