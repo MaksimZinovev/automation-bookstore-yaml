@@ -25,9 +25,6 @@ variables:
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
-  manualTriggerDEV: true
-  manualTriggerQA: false
-
 stages:
 - stage: Build
   displayName: Build Web App Stage
