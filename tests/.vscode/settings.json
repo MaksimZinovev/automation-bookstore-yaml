@@ -1,0 +1,9 @@
+{
+    "Wingman.Ollama": {
+        "codeModel": "deepseek-coder:latest",
+        "chatModel": "deepseek-coder:latest",
+        "baseUrl": "http://localhost:11434",
+        "apiPath": "/api/generate",
+        "modelInfoPath": "/api/show"
+    }
+}

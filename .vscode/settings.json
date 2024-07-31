@@ -2,5 +2,20 @@
 {
     "[azure-pipelines]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "Wingman.Ollama": {
+        "codeModel": "deepseek-coder:6.7b-base-q8_0",
+        "chatModel": "phi3:latest",
+        "baseUrl": "http://localhost:11434",
+        "apiPath": "/api/generate",
+        "modelInfoPath": "/api/show"
+    },
+    "Wingman.InteractionSettings": {
+        "codeCompletionEnabled": true,
+        "codeStreaming": false,
+        "codeContextWindow": 256,
+        "codeMaxTokens": -1,
+        "chatContextWindow": 4096,
+        "chatMaxTokens": 4096
     }
 }
