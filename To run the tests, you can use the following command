@@ -1,0 +1,1 @@
+cd tests && npx playwright test bookstore
