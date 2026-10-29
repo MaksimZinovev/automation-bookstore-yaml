@@ -79,8 +79,9 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
-.env.test
+# .env is intentionally tracked: it holds the shared site port, not secrets
+.env.local
+.env.*.local
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache

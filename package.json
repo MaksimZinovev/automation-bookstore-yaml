@@ -1,0 +1,13 @@
+{
+  "name": "automation-bookstore-yaml",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sample application for test automation",
+  "license": "MIT",
+  "scripts": {
+    "serve": "live-server --port=${PORT:-$(grep -E '^PORT=' .env | cut -d= -f2)}",
+    "test": "npm run test:playwright && npm run test:cypress",
+    "test:playwright": "cd tests && npx playwright test",
+    "test:cypress": "cd e2e-tests && npx cypress run"
+  }
+}

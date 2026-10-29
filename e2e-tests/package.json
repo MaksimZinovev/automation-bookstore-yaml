@@ -12,5 +12,8 @@
   "dependencies": {
     "cypress": "^12.3.0",
     "mocha": "^10.2.0"
+  },
+  "devDependencies": {
+    "dotenv": "^18.0.9"
   }
 }
